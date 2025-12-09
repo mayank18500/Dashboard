@@ -1,5 +1,6 @@
 import {sql} from "../config/db.js"
 export const getProducts=async (req, res)=>{
+    const {id}= req.params;
     try{
         const products=await sql`
         SELECT * FROM products
@@ -56,14 +57,14 @@ export const updateProduct=async(req,res)=>{
     const {name,price,image}=req.body;
 
     try{
-        await sql`
+        const updateProducts=await sql`
         UPDATE products
         SET name=${name},price=${price},image=${image}
         WHERE id=${id}
         RETURNING *
         `
 
-        if(updateProduct.length===0){
+        if(updateProducts.length===0){
             return res.status(404).json({
                 success:false,
                 message:"Product not Found",
@@ -74,7 +75,7 @@ export const updateProduct=async(req,res)=>{
 
     }catch(error){
         console.log("Error in updateProduct function",error);
-        res.status(500).jsn({success:false,message:"Internal Server Error"});
+        res.status(500).json({success:false,message:"Internal Server Error"});
     }
 };
 

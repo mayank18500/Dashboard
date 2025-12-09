@@ -3,6 +3,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
+import { aj } from "./lib/arcjet.js";
 
 import productRoutes from "./routes/productRoutes.js";
 import { sql } from "./config/db.js";
@@ -19,7 +20,7 @@ app.use(morgan("dev"));
 
 //apply arcjet rate limits to all routes
 
-app.use(async(req,resizeBy,next)=>{
+app.use(async(req,res,next)=>{
   try{
     const decision =await aj.protect(req,{
       requested:1, //specifies that each request consumes 1 token

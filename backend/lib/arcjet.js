@@ -9,7 +9,7 @@ export const aj=arcjet({
         shield({mode:"LIVE"}),
         detectBot({
             mode:"LIVE",
-            allows:[
+            allow:[
                 "CATEGORY:SEARCH_ENGINE",
 
             ]
