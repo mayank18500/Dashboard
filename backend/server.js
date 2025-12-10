@@ -57,11 +57,13 @@ app.use(async (req, res, next) => {
 
 app.use("/api/products", productRoutes);
 
+// backend/server.js
+
 if (process.env.NODE_ENV === "production") {
-  // server our react app
   app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-  app.get("*", (req, res) => {
+  // CORRECT SYNTAX: Regular Expression object /.*/ (no quotes)
+  app.get(/.*/, (_req, res) => {
     res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
   });
 }
